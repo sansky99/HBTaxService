@@ -1,0 +1,154 @@
+//
+//  Prefix header
+//
+//  The contents of this file are implicitly included at the beginning of every source file.
+//
+
+#import <Availability.h>
+
+#ifndef __IPHONE_5_0
+#warning "This project uses features only available in iOS SDK 5.0 and later."
+#endif
+
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#endif
+
+#import "ServyouAppDelegate.h"
+#import "ServyouDefines.h"
+
+#import "UserInfo.h"
+
+#define HTTP_POST
+
+//#define _TEST_ENV_          //测试环境
+
+//抓取信息650105053188449  111
+//#define SERVER_CRAWLER_ADDRESS					@"http://mobile.servyou.com.cn/"
+
+
+#ifdef _TEST_ENV_                //测试环境
+//账户中心
+#define SERVER_ACCOUNT @"http://192.168.29.113:8302/"
+//网厅
+#define SERVER_WTPUBLIC @"http://192.168.29.112:8701/"
+
+#define SERVER_ADDRESS                @"http://222.82.214.195:7003/"
+#define SERVER_LOGIN_URL            @"http://192.168.110.178/account/api/account/group_account/login"
+#else                            //生产环境
+
+//账户中心
+#define SERVER_ACCOUNT @"http://183.57.17.83:80/"
+//网厅
+#define SERVER_WTPUBLIC @"http://183.57.17.83:80/"
+//新疆
+#define SERVER_ADDRESS                   @"http://222.82.214.195:7003/"
+
+#endif
+
+
+//获取设备的物理高度
+#define ScreenHeight [UIScreen mainScreen].bounds.size.height//self.view.frame.size.width
+
+//获取设备的物理宽度
+#define ScreenWidth [UIScreen mainScreen].bounds.size.width
+
+//判断设备iPhone5
+#define iPhone5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
+
+//高于指定iOS版本
+#define IOS_6	([[[UIDevice currentDevice] systemVersion] intValue] >= 6)
+#define IOS_7	([[[UIDevice currentDevice] systemVersion] intValue] >= 7)
+#define IOS_8	([[[UIDevice currentDevice] systemVersion] intValue] >= 8)
+
+#define showSecondLogin(aView)\
+{\
+SecondLoginViewController *login = [aView.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([SecondLoginViewController class])];\
+login.view.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5f];\
+[login showLoginInViewController:aView];\
+}
+
+
+//add by zgp
+#pragma mark - String
+
+#define StringEmpty @""
+#define Public_Date_Format @"yyyy-MM-dd HH:mm:ss"
+
+//当网络返回无数据提示语
+#define Public_HttpRespond_Empty @"没有找到您要的数据，请重试！"
+
+#define Public_HttpRequest_Error    @"连接到服务器失败"
+
+#define ChannelCenter_Encryption_Key @"[u\\8a1w4=ag;'\"\\i"
+
+//网厅加密KEY
+#define Register_DES_KEY @"zhservyoukey"
+
+#define mark -URL
+//账户中心登录地址
+#define SERVER_ACCOUNTLOGIN_URL @"account/api/account/zhuhai/login"
+//短信验证码
+#define SERVER_ACCOUNTCaptchaCode_URL @"account/api/account/zhuhai/mobile/getVerifyCode?mobile=%@"
+//账户中心身份验证
+#define SERVER_ACCOUNT_REGISTER @"account/api/account/zhuhai/user/add"
+//网厅用户绑定
+#define SERVER_WT_REGISTER @"ydAppLoginServiceServlet"
+
+//纳税人学校：
+#define SERVER_PUBLIC_NSRXX @"http://zhwx.wintax.cn/portal/site/site/portal/zhwx/index.jsp"
+//办税日历
+#define SERVER_PUBLIC_TAXCAL @"http://183.57.17.83/zhuhaiweixin/bsrl/index.html"
+//办税地图
+#define SERVER_PUBLIC_TAXMAP @"http://183.57.17.83/ZhBsfwtWeb/pages/bsdt/index.html?ChannelId=WXJR"
+//咨询留言
+#define SERVER_PUBLIC_CONSULT @"http://www.gd-n-tax.gov.cn/wcm/extends/web/jsp/portal/complaint/complaintAdd.jsp?siteEncode=001002&ctype=0"
+//办税指南
+#define SERVER_PUBLIC_TaxGuide @"http://183.57.17.83/zhuhaiweixin/bszn/index.html"
+//预约服务
+#define SERVER_PUBLIC_Service @"http://183.57.17.83/ZhBsfwtWeb/pages/wxyy/wxyy_mobile.html?ChannelId=WXJR"
+//咨询热点
+#define SERVER_PUBLIC_Hot @"http://183.57.17.83/zhuhaiweixin/PageListServlet?type=20"
+//发票查验
+#define SERVER_PUBLIC_Invoice @"http://183.57.17.83/zhuhaiweixin/homePage/fpcy.html"
+//企业所得税月（季）度纳税申报
+#define SERVER_TAXSERVICE_QYSDS @"sb/Qysds2014Sb_initPage.do?nsqxDm=30&sblx=ZCSB&pzzlDm=264&nsrsbh=%@&ChannelId=%@&mobileKey=%@"
+//消费税(金银首饰类)申报
+#define SERVER_TAXSERVICE_XFS @"sb/XfsSb_initPage.do?nsrsbh=%@&ChannelId=%@&mobileKey=%@"
+//增值税小规模申报
+#define SERVER_TAXSERVICE_ZZSXGMSB @"sb/XgmzzsSb_initPage.do?nsrsbh=%@&ChannelId=%@&mobileKey=%@"
+//网上缴款
+#define SERVER_TAXSERVICE_WSJK @"getCms/tranCms_jkxxcx.do?nsrsbh=%@&ChannelId=%@&mobileKey=%@"
+//申报结果查询
+#define SERVER_TAXSERVICE_SBJGCX @"getCms/tranCms_tranSbcx.do?nsrsbh=%@&ChannelId=%@&mobileKey=%@"
+//渠道中心
+#define SERVER_CHANNEL_URL @"http://183.57.17.83/channel/api/channel/file/package/get?nsrsbh=%@&offset=%@&terminal=1"
+//申报历史
+#define SERVER_Query_DeclareHistory @"http://183.57.17.83/getCms/tranCms_tranSbcx.do?nsrsbh=%@"
+//申报情况
+#define SERVER_Query_DeclareInfo @"getCms/tranCms_tranSbcx4new.do?nsrsbh=%@&ChannelId=%@&mobileKey=%@"
+//违法违章
+#define SERVER_Query_Illegal @"getCms/tranCms_wfwzxx.do?nsrsbh=%@&ChannelId=%@&mobileKey=%@"
+//文书情况
+#define SERVER_Query_Paperwork @"getCms/tranCms_wsxxcx.do?nsrsbh=%@&ChannelId=%@&mobileKey=%@"
+//缴款信息
+#define SERVER_Query_Paymentinformation  @"getCms/tranCms_jkxxcx.do?nsrsbh=%@&ChannelId=%@&mobileKey=%@"
+//税宣专栏
+#define SERVER_Public_SXZL @"http://183.57.17.83/getCms/tranCms_tranCmsZL.do"
+//通知公告
+#define SERVER_Public_Notice @"http://183.57.17.83/getCms/tranCms_tranCmsGG.do"
+//修改密码
+#define SERVER_ACCOUNT_MODIFYPSD @"account/api/account/person/account/chgPwd"
+//忘记密码
+#define SERVER_ACCOUNT_FORGETPASSWORD @"account/api/account/person/account/v/setPwd"
+
+//检测版本
+#define SERVER_Public_Update @"http://183.57.17.83/mobileapp/update_ios_version.txt"
+//版本下载地址
+#define SERVER_Public_Version @"http://183.57.17.83/mobileapp/zhgs.ipa"
+//<<<end
+
+
+
+
