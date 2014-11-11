@@ -1,5 +1,5 @@
 //
-//  SettingViewController.h
+//  HBSettingViewController.h
 //  XJTaxTrain
 //
 //  Created by khuang on 14-7-7.
@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 //1.6 设置
-@interface SettingViewController : UIViewController
+@interface HBSettingViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UILabel *userID;
 @property (weak, nonatomic) IBOutlet UIButton *btnIcon;
 @property (weak, nonatomic) IBOutlet UILabel *labName;

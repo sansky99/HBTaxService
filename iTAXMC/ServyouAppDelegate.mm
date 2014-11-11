@@ -24,11 +24,7 @@
 #import "RevealController.h"
 
 #import "UserInfo.h"
-#import "NSData+Encryption.h"
-#import "ASIFormDataRequest.h"
-#import <MobileCoreServices/UTCoreTypes.h>
-#import "GTMBase64.h"
- static  NSString *DES_KEY = @"JDLSJDLS";
+
 
 #define Update_Alert_Tag 200001
 

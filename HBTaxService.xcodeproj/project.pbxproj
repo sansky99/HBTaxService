@@ -87,6 +87,8 @@
 		047B25EA19792720009A7E6D /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 047B25E919792720009A7E6D /* OpenGLES.framework */; };
 		047B25EC1979272F009A7E6D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 047B25EB1979272E009A7E6D /* Security.framework */; };
 		0488DE161A0C6E660092E017 /* UploadTypeInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0488DE151A0C6E660092E017 /* UploadTypeInfoViewController.m */; };
+		0488DE1C1A10485B0092E017 /* HBSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0488DE191A10485B0092E017 /* HBSettingViewController.m */; };
+		0488DE201A1065810092E017 /* HBLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0488DE1F1A1065810092E017 /* HBLoginViewController.m */; };
 		0496D6BD19934BAF00659E93 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 0496D6BC19934BAF00659E93 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		04A6D08319AD7C1C00E083F6 /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A6D07A19AD7C1C00E083F6 /* NSObject+SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		04A6D08419AD7C1C00E083F6 /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A6D07C19AD7C1C00E083F6 /* NSString+SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -134,9 +136,6 @@
 		04BDC0291980A37A003EC556 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BDC01D1980A37A003EC556 /* AboutViewController.m */; };
 		04BDC02A1980A37A003EC556 /* ClearCacheViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BDC01F1980A37A003EC556 /* ClearCacheViewController.m */; };
 		04BDC02B1980A37A003EC556 /* FontSizeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BDC0211980A37A003EC556 /* FontSizeViewController.m */; };
-		04BDC02C1980A37A003EC556 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BDC0231980A37A003EC556 /* LoginViewController.m */; };
-		04BDC02D1980A37A003EC556 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BDC0251980A37A003EC556 /* SettingViewController.m */; };
-		04BDC02E1980A37A003EC556 /* SettingViewTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BDC0271980A37A003EC556 /* SettingViewTableController.m */; };
 		04C9E96219779C9F00FF5EDE /* MRCircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C9E95E19779C9F00FF5EDE /* MRCircularProgressView.m */; };
 		04C9E96319779C9F00FF5EDE /* MRWeakProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C9E96119779C9F00FF5EDE /* MRWeakProxy.m */; };
 		04D23797196FF05E009C7B33 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04D23796196FF05E009C7B33 /* CoreTelephony.framework */; };
@@ -415,6 +414,10 @@
 		047B25EB1979272E009A7E6D /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		0488DE141A0C6E660092E017 /* UploadTypeInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UploadTypeInfoViewController.h; path = upload/UploadTypeInfoViewController.h; sourceTree = SOURCE_ROOT; };
 		0488DE151A0C6E660092E017 /* UploadTypeInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UploadTypeInfoViewController.m; path = upload/UploadTypeInfoViewController.m; sourceTree = SOURCE_ROOT; };
+		0488DE181A10485B0092E017 /* HBSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HBSettingViewController.h; path = ViewController/Login_Setting/HBSettingViewController.h; sourceTree = "<group>"; };
+		0488DE191A10485B0092E017 /* HBSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HBSettingViewController.m; path = ViewController/Login_Setting/HBSettingViewController.m; sourceTree = "<group>"; };
+		0488DE1E1A1065810092E017 /* HBLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HBLoginViewController.h; path = ViewController/Login_Setting/HBLoginViewController.h; sourceTree = "<group>"; };
+		0488DE1F1A1065810092E017 /* HBLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HBLoginViewController.m; path = ViewController/Login_Setting/HBLoginViewController.m; sourceTree = "<group>"; };
 		0496D6BB19934BAF00659E93 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
 		0496D6BC19934BAF00659E93 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		04A6288419ADB65A00594BE3 /* arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow@2x.png"; sourceTree = "<group>"; };
@@ -508,12 +511,6 @@
 		04BDC01F1980A37A003EC556 /* ClearCacheViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClearCacheViewController.m; sourceTree = "<group>"; };
 		04BDC0201980A37A003EC556 /* FontSizeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontSizeViewController.h; sourceTree = "<group>"; };
 		04BDC0211980A37A003EC556 /* FontSizeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FontSizeViewController.m; sourceTree = "<group>"; };
-		04BDC0221980A37A003EC556 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
-		04BDC0231980A37A003EC556 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
-		04BDC0241980A37A003EC556 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
-		04BDC0251980A37A003EC556 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
-		04BDC0261980A37A003EC556 /* SettingViewTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewTableController.h; sourceTree = "<group>"; };
-		04BDC0271980A37A003EC556 /* SettingViewTableController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewTableController.m; sourceTree = "<group>"; };
 		04C9E95D19779C9F00FF5EDE /* MRCircularProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRCircularProgressView.h; sourceTree = "<group>"; };
 		04C9E95E19779C9F00FF5EDE /* MRCircularProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRCircularProgressView.m; sourceTree = "<group>"; };
 		04C9E95F19779C9F00FF5EDE /* MRProgressHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRProgressHelper.h; sourceTree = "<group>"; };
@@ -784,6 +781,7 @@
 			children = (
 				041656BB1A085A0A003F70C8 /* HBMainViewController.h */,
 				041656BC1A085A0A003F70C8 /* HBMainViewController.m */,
+				0488DE171A1048490092E017 /* Login_Setting */,
 				041656BE1A085F12003F70C8 /* Upload */,
 			);
 			name = "黄凯";
@@ -1232,6 +1230,17 @@
 			name = ViewController;
 			sourceTree = "<group>";
 		};
+		0488DE171A1048490092E017 /* Login_Setting */ = {
+			isa = PBXGroup;
+			children = (
+				0488DE1E1A1065810092E017 /* HBLoginViewController.h */,
+				0488DE1F1A1065810092E017 /* HBLoginViewController.m */,
+				0488DE181A10485B0092E017 /* HBSettingViewController.h */,
+				0488DE191A10485B0092E017 /* HBSettingViewController.m */,
+			);
+			name = Login_Setting;
+			sourceTree = "<group>";
+		};
 		0496D6BA19934B8900659E93 /* JSONKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -1394,12 +1403,6 @@
 				04BDC01F1980A37A003EC556 /* ClearCacheViewController.m */,
 				04BDC0201980A37A003EC556 /* FontSizeViewController.h */,
 				04BDC0211980A37A003EC556 /* FontSizeViewController.m */,
-				04BDC0221980A37A003EC556 /* LoginViewController.h */,
-				04BDC0231980A37A003EC556 /* LoginViewController.m */,
-				04BDC0241980A37A003EC556 /* SettingViewController.h */,
-				04BDC0251980A37A003EC556 /* SettingViewController.m */,
-				04BDC0261980A37A003EC556 /* SettingViewTableController.h */,
-				04BDC0271980A37A003EC556 /* SettingViewTableController.m */,
 			);
 			name = Login_Setting;
 			path = ViewController/Login_Setting;
@@ -1900,7 +1903,6 @@
 				187551B719C6B8C2006E871C /* SDWebImagePrefetcher.m in Sources */,
 				1866D6CB19AB17F500A793C1 /* GetModel.m in Sources */,
 				04BDBFFF197F8C73003EC556 /* ZAActivityBar.m in Sources */,
-				04BDC02C1980A37A003EC556 /* LoginViewController.m in Sources */,
 				04BBC279196CD65100C9050F /* LatestNotificationEntity.m in Sources */,
 				04A6D08419AD7C1C00E083F6 /* NSString+SBJSON.m in Sources */,
 				040EFAF319ABDA0D00CA30BE /* Reachability.m in Sources */,
@@ -1923,7 +1925,6 @@
 				04BB260819C1398700509EBC /* BaseTouchesViewController.m in Sources */,
 				04BBC2C2196F64E400C9050F /* ASICloudFilesObject.m in Sources */,
 				79A93D6819B9A22900A14675 /* DetailBody.m in Sources */,
-				04BDC02E1980A37A003EC556 /* SettingViewTableController.m in Sources */,
 				045F2B1119CABF5400D9F7F1 /* FindViewController.m in Sources */,
 				04BDC02B1980A37A003EC556 /* FontSizeViewController.m in Sources */,
 				187551B819C6B8C2006E871C /* UIButton+WebCache.m in Sources */,
@@ -1937,7 +1938,6 @@
 				1869943F19AD7BF20055AB8D /* NSArray+JSONModel.m in Sources */,
 				187551B119C6B8C2006E871C /* SDImageCache.m in Sources */,
 				04BBC2C0196F64E400C9050F /* ASICloudFilesContainerRequest.m in Sources */,
-				04BDC02D1980A37A003EC556 /* SettingViewController.m in Sources */,
 				04BBC26F196CD56300C9050F /* FMDatabaseAdditions.m in Sources */,
 				0496D6BD19934BAF00659E93 /* JSONKit.m in Sources */,
 				79A93D6519B9A0E700A14675 /* DetailInfoModel.m in Sources */,
@@ -2009,9 +2009,11 @@
 				044270B919F8BA060022C4D3 /* ChannelShowDetailViewController.m in Sources */,
 				18B11DAD19AC603800741171 /* UIColor+Utils.m in Sources */,
 				04C9E96219779C9F00FF5EDE /* MRCircularProgressView.m in Sources */,
+				0488DE1C1A10485B0092E017 /* HBSettingViewController.m in Sources */,
 				0414DFF619AB030C00A2EFEF /* sharedTool.m in Sources */,
 				043EB88D19C8196D00AC831D /* ChannelDetailsViewController.m in Sources */,
 				18E0334319B04E68007E63C6 /* CRNavigationBar.m in Sources */,
+				0488DE201A1065810092E017 /* HBLoginViewController.m in Sources */,
 				043BD88D19CFF2F6009807FC /* NSData+Encryption.m in Sources */,
 				187551B919C6B8C2006E871C /* UIImage+GIF.m in Sources */,
 				1866D6CD19AB17F500A793C1 /* InformationModel.m in Sources */,

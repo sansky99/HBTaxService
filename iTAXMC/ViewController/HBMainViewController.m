@@ -15,7 +15,9 @@
 #import "SevryouChannelCenter.h"//渠道中心
 #import "ChannelCenterDo.h"
 #include "CompatibleaPrintf.h"
-#import "SettingViewController.h"
+
+#import "HBSettingViewController.h"
+#import "RevealController.h"
 
 #import "SVProgressHUD.h"
 
@@ -24,7 +26,7 @@
 #import "JSONKit.h"
 #import "ChannelCenterData.h"
 
-#import "Login_Setting/LoginViewController.h"
+#import "Login_Setting/HBLoginViewController.h"
 
 #import "UploadTypeTableViewController.h"
 
@@ -33,7 +35,7 @@
 @property (weak, nonatomic) IBOutlet UIView *midView;
 @property (strong, nonatomic) NSArray *items;
 @property (strong, nonatomic) SGFocusImageFrame *focusImage;
-@property (strong, nonatomic) SettingViewController *settingVC;
+@property (strong, nonatomic) HBSettingViewController *settingVC;
 
 -(BOOL) reloadItems;
 @end
@@ -77,46 +79,8 @@
     
     UIButton *loginButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 41, 39)];
     [loginButton addTarget:self action:@selector(onSetting:) forControlEvents:UIControlEventTouchUpInside];
-    [loginButton setImage:[UIImage imageNamed:@"user_logout"] forState:UIControlStateNormal];
-    
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:loginButton];
-    
-    if ([[ServyouDefines sharedUserInfo] isLogin])
-    {
-        [(UIBarButtonItem*)[self.navigationItem.rightBarButtonItems lastObject] setImage:[UIImage imageNamed:@"user_login"]  ];
-    }else
-    {
-        [(UIBarButtonItem*)[self.navigationItem.rightBarButtonItems lastObject] setImage:[UIImage imageNamed:@"user_logout"]  ];
-        
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:loginButton];
-        
-        //滚动图片
-        UIImage *img = [UIImage imageNamed:@"banner1.jpg"];
-        SGFocusImageItem *item1 = [[SGFocusImageItem alloc] initWithTitle:@"" image:img tag:0];
-        SGFocusImageItem *item2 = [[SGFocusImageItem alloc] initWithTitle:@"" image:[UIImage imageNamed:@"banner2.jpg"] tag:1];
-        SGFocusImageItem *item3 = [[SGFocusImageItem alloc] initWithTitle:@"" image:[UIImage imageNamed:@"banner3.jpg"] tag:2];
-        
-        focusImage = [[SGFocusImageFrame alloc] initWithFrame:focusImageFrame delegate:self focusImageItems:item1, item2, item3,nil];
-        
-//        self.tableView.tableHeaderView = focusImage;
-        
-        [self reloadItems];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onNewMessage:) name:kNewMessageNotification object:nil];
-        [[MessageCenter sharedMessageCenter] refreshMessages];
-        
-        
-        //渠道中心监听 NSString *const kChannelNotificationCenter =
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(kXGPushNotificationCenterAction:) name:@"kNewXGPushNotification" object:nil];
-        
-        //渠道中心监听 NSString *const kChannelNotificationCenter =
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(kXGPushNotificationCenterAction:) name:@"kChannelNotificationCenter" object:nil];
-        
-        //退出登录更改登陆按钮
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(kLogOutNotificationCenterAction:) name:@"kLogOutNotification" object:nil];
-    }
-    
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:loginButton];
+    [loginButton setImage:[UIImage imageNamed:@"menu"] forState:UIControlStateNormal];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:loginButton];
     
     //滚动图片
     UIImage *img = [UIImage imageNamed:@"banner1.jpg"];
@@ -125,12 +89,9 @@
     SGFocusImageItem *item3 = [[SGFocusImageItem alloc] initWithTitle:@"" image:[UIImage imageNamed:@"banner3.jpg"] tag:2];
     
     focusImage = [[SGFocusImageFrame alloc] initWithFrame:focusImageFrame delegate:self focusImageItems:item1, item2, item3,nil];
-    
+    [self reloadItems];
     [self.topView addSubview:focusImage];
     
-//    self.tableView.tableHeaderView = focusImage;
-    
-    [self reloadItems];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onNewMessage:) name:kNewMessageNotification object:nil];
     [[MessageCenter sharedMessageCenter] refreshMessages];
@@ -316,7 +277,16 @@
 
 -(void) onSetting :(id) sender
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kNotifySettingTouchUpInside object:self];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:kNotifySettingTouchUpInside object:self];
+    
+    UIViewController *vc =self.parentViewController;
+    while (vc && ![vc isKindOfClass:[RevealController class]] ) {
+        vc = vc.parentViewController;
+    }
+
+    HBSettingViewController *setting = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([HBSettingViewController class])];
+    vc.modalPresentationStyle = UIModalPresentationCurrentContext;
+    [vc presentViewController:setting animated:TRUE completion:nil];
 }
 
 

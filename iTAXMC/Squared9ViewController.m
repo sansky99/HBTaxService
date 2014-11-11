@@ -8,7 +8,7 @@
 
 #import "Squared9ViewController.h"
 #import "SVProgressHUD.h"
-#import "SettingViewController.h"
+#import "HBSettingViewController.h"
 //#import "serachViewController.h"
 #include "CompatibleaPrintf.h"
 @interface Squared9ViewController ()

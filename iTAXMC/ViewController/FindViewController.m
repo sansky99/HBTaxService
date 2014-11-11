@@ -8,9 +8,9 @@
 
 #import "FindViewController.h"
 #include "CompatibleaPrintf.h"
-#import "SettingViewController.h"
+#import "HBSettingViewController.h"
 #import "ServyouAppDelegate.h"
-#import "LoginViewController.h"
+#import "HBLoginViewController.h"
 #import "TestWebViewViewController.h"
 
 
@@ -171,7 +171,7 @@
         [self.navigationController pushViewController:testWeb animated:YES];
         
     }else{
-        LoginViewController * login = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([LoginViewController class])];
+        HBLoginViewController * login = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([HBLoginViewController class])];
         
         UINavigationController *loginVC = [[UINavigationController alloc] initWithRootViewController:login];
         

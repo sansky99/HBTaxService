@@ -20,7 +20,9 @@
 
 #import "UserInfo.h"
 
-#define HTTP_POST
+//河北
+static NSString *DES_KEY = @"JDLSJDLS";
+static NSString *HB_HTTP_URL = @"http://192.168.29.102:7001/bondegate/bondeServiceServlet";
 
 //#define _TEST_ENV_          //测试环境
 
@@ -147,7 +149,9 @@ login.view.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5f];
 #define SERVER_Public_Update @"http://183.57.17.83/mobileapp/update_ios_version.txt"
 //版本下载地址
 #define SERVER_Public_Version @"http://183.57.17.83/mobileapp/zhgs.ipa"
-//<<<end
+
+
+
 
 
 

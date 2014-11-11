@@ -8,11 +8,10 @@
 
 #import "QCListViewController.h"
 
-#import "LoginViewController.h"
+#import "HBLoginViewController.h"
 #define Duration 0.2
 
 //模块ViewController
-#import "LoginViewController.h"
 #import "ChannelDetailsViewController.h"//办税提醒详情
 #import "WebViewController.h"
 
@@ -103,7 +102,7 @@
 - (void)showLogin:(NSNumber *)moduleID
 {
     UIStoryboard *storyboard = self.rootViewController.storyboard;
-    LoginViewController *loginViewController = [storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([LoginViewController class])];
+    HBLoginViewController *loginViewController = [storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([HBLoginViewController class])];
     loginViewController.moduleViewC = self;
     loginViewController.moduleID = moduleID;
     UINavigationController *loginVC = [[UINavigationController alloc] initWithRootViewController:loginViewController];

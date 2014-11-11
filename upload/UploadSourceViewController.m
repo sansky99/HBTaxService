@@ -14,8 +14,7 @@
 #import "JSONKit.h"
 
 static uint     MAX_CACHE = 50;
-static NSString *DES_KEY = @"JDLSJDLS";
-static NSString *HB_HTTP_URL = @"http://192.168.29.102:7001/bondegate/bondeServiceServlet";
+
 
 @implementation CachedImageItem
 @synthesize path, image;

@@ -13,7 +13,7 @@
 #import "SevryouChannelCenter.h"//渠道中心
 #import "ChannelCenterDo.h"
 #include "CompatibleaPrintf.h"
-#import "SettingViewController.h"
+#import "HBSettingViewController.h"
 
 #import "SVProgressHUD.h"
 
@@ -22,11 +22,11 @@
 #import "JSONKit.h"
 #import "ChannelCenterData.h"
 
-#import "Login_Setting/LoginViewController.h"
+#import "Login_Setting/HBLoginViewController.h"
 
 @interface MainViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (strong, nonatomic) NSArray *items;
-@property (strong, nonatomic) SettingViewController *settingVC;
+@property (strong, nonatomic) HBSettingViewController *settingVC;
 
 -(BOOL) reloadItems;
 @end
@@ -461,7 +461,7 @@
         }
     }else{
         
-        LoginViewController * login = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([LoginViewController class])];
+        HBLoginViewController * login = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([HBLoginViewController class])];
         
         UINavigationController *loginVC = [[UINavigationController alloc] initWithRootViewController:login];
         [self presentViewController:loginVC animated:YES completion:nil];

@@ -33,7 +33,7 @@
 #import "RevealController.h"
 
 #import "MainTabBarController.h"
-#import "SettingViewController.h"
+#import "HBSettingViewController.h"
 
 @implementation RevealController
 
@@ -54,7 +54,7 @@
 - (void)viewDidLoad
 {    
     UIViewController *vc1= [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MainTabBarController class])];
-    UIViewController *vc2= [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([SettingViewController class])];
+    UIViewController *vc2= [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([HBSettingViewController class])];
     self.delegate = self;
     self.leftSlide = TRUE;
     

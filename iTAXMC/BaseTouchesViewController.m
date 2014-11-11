@@ -7,7 +7,7 @@
 //
 
 #import "BaseTouchesViewController.h"
-#import "SettingViewController.h"
+#import "HBSettingViewController.h"
 
 @interface BaseTouchesViewController ()
 
