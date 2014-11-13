@@ -285,6 +285,7 @@
     }
 
     HBSettingViewController *setting = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([HBSettingViewController class])];
+    setting.modalPresentationStyle = UIModalPresentationOverCurrentContext;
     vc.modalPresentationStyle = UIModalPresentationCurrentContext;
     [vc presentViewController:setting animated:TRUE completion:nil];
 }

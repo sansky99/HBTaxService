@@ -11,10 +11,11 @@
 #import "MainTabBarController.h"
 
 #import  "CRNavigationController.h"
-#import "Squared9ViewController.h"
-#import "MainViewController.h"
+//#import "Squared9ViewController.h"
+//#import "MainViewController.h"
+//#import "FindViewController.h"
 #import "HBMainViewController.h"
-#import "FindViewController.h"
+#import "ServiceViewController.h"
 
 @interface MainTabBarController ()
 
@@ -39,14 +40,18 @@
         self.tabBar.barTintColor = [UIColor colorWithWhite:250 alpha:1];
     
     HBMainViewController * firstViewController = [self.storyboard instantiateViewControllerWithIdentifier: NSStringFromClass( [HBMainViewController class])];
-    
     firstViewController.title = @"办税服务";
-    firstViewController.tabBarItem.image = [UIImage imageNamed:@"消息"];
-    firstViewController.tabBarItem.selectedImage = [UIImage imageNamed:@"消息p"];
+    firstViewController.tabBarItem.image = [UIImage imageNamed:@"涉税服务"];
+    firstViewController.tabBarItem.selectedImage = [UIImage imageNamed:@"涉税服务p"];
+    CRNavigationController *firstNavController = [[CRNavigationController alloc] initWithRootViewController:firstViewController];
     
-     CRNavigationController *firstNavController = [[CRNavigationController alloc] initWithRootViewController:firstViewController];
+    ServiceViewController * thirdViewController = [self.storyboard instantiateViewControllerWithIdentifier: NSStringFromClass( [ServiceViewController class])];
+    thirdViewController.title = @"公众服务";
+    thirdViewController.tabBarItem.image = [UIImage imageNamed:@"公众服务"];
+    thirdViewController.tabBarItem.selectedImage = [UIImage imageNamed:@"公众服务p"];
+    CRNavigationController *thirdNavController = [[CRNavigationController alloc] initWithRootViewController:thirdViewController];
     
-    [self setViewControllers:@[firstNavController]];
+    [self setViewControllers:@[firstNavController, thirdNavController]];
 
     // modifyed by hellen.zhou  8.28
    

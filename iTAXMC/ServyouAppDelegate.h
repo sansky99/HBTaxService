@@ -8,14 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-#import "BMapKit.h"
+//#import "BMapKit.h"
 @class SevryouChannelCenter;
 @class ASIFormDataRequest;
-@interface ServyouAppDelegate : UIResponder <UIApplicationDelegate,BMKLocationServiceDelegate,BMKGeneralDelegate>
+@interface ServyouAppDelegate : UIResponder <UIApplicationDelegate/*,BMKLocationServiceDelegate,BMKGeneralDelegate*/>
 
 {
 //    NSString* deviceTokenStr;//手机TokenStr
-    BMKMapManager* _mapManager;
+//    BMKMapManager* _mapManager;
     
     ASIFormDataRequest *upDateRequest;
     

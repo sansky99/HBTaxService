@@ -13,9 +13,9 @@ NSString * const kDesKey = @"DesKey09";
 
 NSString * const kUserID = @"kUserID";
 NSString * const kGroupID = @"kGroupID";
-NSString * const kGroupName = @"kGroupName";
+NSString * const kUserName = @"kUserName";
 //NSString * const kOrgCode = @"kOrgCode";
-//NSString * const kOrgName = @"kOrgName";
+NSString * const kOrgName = @"kOrgName";
 //NSString * const kRegDate = @"kRegDate";
 NSString * const kUserPassword = @"kUserPwd";
 NSString * const kUserTag = @"kUserTag";
@@ -29,7 +29,7 @@ NSString *const KToken = @"KToken";
 @implementation UserInfo
 
 //@synthesize bLogin;
-@synthesize password, userID, groupID, groupName/*, orgCode, orgName, regDate*/, tag ;
+@synthesize password, userID, groupID, userName, orgName/*, orgCode, regDate*/, tag ;
 @synthesize fontSize;
 @synthesize wtLoginUnable = _wtLoginUnable;
 @synthesize key = _key;
@@ -41,7 +41,7 @@ NSString *const KToken = @"KToken";
 {
     if (self = [super init])
     {
-        self.userID = self.groupID = self.groupName/* = self.orgCode = self.orgName = self.regDate*/ = self.password = self.tag = @"";
+        self.userID = self.groupID = self.userName = self.orgName /* = self.orgCode = self.regDate*/ = self.password = self.tag = @"";
         self.fontSize = 1;
         self.wtLoginUnable = NO;
         self.key = StringEmpty;
@@ -54,16 +54,16 @@ NSString *const KToken = @"KToken";
 
 -(BOOL) isLogin
 {
-    if ([self.loginStatus isEqualToString:@"YES"])
-    {
-        return YES;
-    }
-    else
-    {
-        return NO;
-    }
+//    if ([self.loginStatus isEqualToString:@"YES"])
+//    {
+//        return YES;
+//    }
+//    else
+//    {
+//        return NO;
+//    }
     
-    //return [self.userID length] > 0;
+    return [self.userID length] > 0;
 }
 
 //-(NSString*) passwordBase64
@@ -78,9 +78,9 @@ NSString *const KToken = @"KToken";
 {
     self.userID = [[NSUserDefaults standardUserDefaults] stringForKey:kUserID];
     self.groupID =[[NSUserDefaults standardUserDefaults] stringForKey:kGroupID];
-    self.groupName = [[NSUserDefaults standardUserDefaults] stringForKey:kGroupName];
+    self.userName = [[NSUserDefaults standardUserDefaults] stringForKey:kUserName];
 //    self.orgCode = [[NSUserDefaults standardUserDefaults] stringForKey:kOrgCode];
-//    self.orgName = [[NSUserDefaults standardUserDefaults] stringForKey:kOrgName];
+    self.orgName = [[NSUserDefaults standardUserDefaults] stringForKey:kOrgName];
 //    self.regDate = [[NSUserDefaults standardUserDefaults] stringForKey:kRegDate];
     self.tag = [[NSUserDefaults standardUserDefaults] stringForKey:kUserTag];
     self.key = [[NSUserDefaults standardUserDefaults] stringForKey:KKey];
@@ -105,13 +105,13 @@ NSString *const KToken = @"KToken";
 {
     [[NSUserDefaults standardUserDefaults] setObject:self.userID forKey:kUserID];
     [[NSUserDefaults standardUserDefaults] setObject:self.groupID forKey:kGroupID];
-    [[NSUserDefaults standardUserDefaults] setObject:self.groupName forKey:kGroupName];
+    [[NSUserDefaults standardUserDefaults] setObject:self.userName forKey:kUserName];
     [[NSUserDefaults standardUserDefaults] setObject:self.tag forKey:kUserTag];
     [[NSUserDefaults standardUserDefaults] setObject:self.key forKey:KKey];
     [[NSUserDefaults standardUserDefaults] setObject:self.nsrsbhStr forKey:KNsrsbhStr];
     [[NSUserDefaults standardUserDefaults] setObject:self.token forKey:KToken];
 //    [[NSUserDefaults standardUserDefaults] setObject:self.orgCode forKey:kOrgCode];
-//    [[NSUserDefaults standardUserDefaults] setObject:self.orgName forKey:kOrgName];
+    [[NSUserDefaults standardUserDefaults] setObject:self.orgName forKey:kOrgName];
 //    [[NSUserDefaults standardUserDefaults] setObject:self.regDate forKey:kRegDate];
 
     if ([self.password length]  > 0)
@@ -135,7 +135,7 @@ NSString *const KToken = @"KToken";
 
 -(void) clear
 {
-    self.groupID = self.groupName/* = self.orgCode = self.orgName = self.regDate*/ = self.password = self.tag = @"";
+    self.userID = self.userName = self.orgName/* = self.orgCode = self.regDate*/ = self.password = self.tag = @"";
     self.key = StringEmpty;
     self.nsrsbhStr = StringEmpty;
     self.loginStatus = StringEmpty;

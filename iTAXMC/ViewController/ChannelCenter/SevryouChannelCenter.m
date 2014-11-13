@@ -7,7 +7,7 @@
 //
 
 #import "SevryouChannelCenter.h"
-#import "JSON.h"
+//#import "JSON.h"
 #import "UserInfo.h"
 #import "ServyouDefines.h"
 #import "ChannelCenterDo.h"
@@ -88,19 +88,20 @@ NSString *const KOffset = @"KOffset";
 
 - (NSString *)getHeaderStr
 {
-    NSString *nsrsbh = [self getNsrsbh];
-    NSDictionary *tokenDict = @{@"nsrsbh":nsrsbh};
-    NSString *tokenStr = [tokenDict JSONRepresentation];
-    NSData *tokenData = [tokenStr dataUsingEncoding:NSUTF8StringEncoding];
-    NSString *key = ChannelCenter_Encryption_Key;
-    NSData *tokenEncode = [tokenData AES256EncryptWithKey:key];
-    
-    NSString *encodeTokenStr = [ServyouDefines hexStringFromData:tokenEncode];//[self hexStringFromData:tokenEncode];
-    encodeTokenStr = [encodeTokenStr uppercaseString];
-    
-    NSDictionary *checkDict = @{@"authType":@"2",@"token":encodeTokenStr};
-    NSString *checkStr = [checkDict JSONRepresentation];
-    return checkStr;
+    return @"";
+//    NSString *nsrsbh = [self getNsrsbh];
+//    NSDictionary *tokenDict = @{@"nsrsbh":nsrsbh};
+//    NSString *tokenStr = [tokenDict JSONRepresentation];
+//    NSData *tokenData = [tokenStr dataUsingEncoding:NSUTF8StringEncoding];
+//    NSString *key = ChannelCenter_Encryption_Key;
+//    NSData *tokenEncode = [tokenData AES256EncryptWithKey:key];
+//    
+//    NSString *encodeTokenStr = [ServyouDefines hexStringFromData:tokenEncode];//[self hexStringFromData:tokenEncode];
+//    encodeTokenStr = [encodeTokenStr uppercaseString];
+//    
+//    NSDictionary *checkDict = @{@"authType":@"2",@"token":encodeTokenStr};
+//    NSString *checkStr = [checkDict JSONRepresentation];
+//    return checkStr;
 }
 
 #if 0
@@ -147,43 +148,43 @@ NSString *const KOffset = @"KOffset";
 
 - (void)tzggDataParseWithChenterDo:(ChannelCenterDo *)centerDo
 {
-    NSString *appointment = centerDo.appointment;
-    NSDictionary *appointmentDict = [appointment JSONValue];
-    NSString *largeCata = [[NSString alloc] initWithFormat:@"%@",[appointmentDict objectForKey:@"largeCata"]];
-    ChannelCenterEntityType entityType;
-    if ([largeCata isEqualToString:@"40"]) {//政策解读
-        entityType = EChannelCenterEntityType_PolicyNewest;
-    }
-    else if ([largeCata isEqualToString:@"10"])//通知公告
-    {
-        entityType = EChannelCenterEntityType_Announcement ;
-    }
-    else if ([largeCata isEqualToString:@"20"])//办税提醒
-    {
-        entityType = EChannelCenterEntityType_TaxNotice;
-    }
-    else
-    {
-        return;
-    }
-    ChannelCenterEntity *entity = [[ChannelCenterEntity alloc] initWithFMDB:[ServyouDefines sharedDatabase]
-                                                                  tableType:entityType];
-    
-    entity.activityId = centerDo.activityId;
-    NSString *condition = [NSString stringWithFormat:@" AND %@ = ?", [ChannelCenterEntity activityId_Col]];
-    BOOL isOK = [entity findOneWithCondition:condition parameters:@[entity.activityId] orderBy:@""];
-    
-    [entity parseFromCenterDo:centerDo];
-    entity.largeCata = largeCata;
-
-    if (isOK)
-    {
-        [entity update];
-    }
-    else
-    {
-        [entity insert];
-    }
+//    NSString *appointment = centerDo.appointment;
+//    NSDictionary *appointmentDict = [appointment JSONValue];
+//    NSString *largeCata = [[NSString alloc] initWithFormat:@"%@",[appointmentDict objectForKey:@"largeCata"]];
+//    ChannelCenterEntityType entityType;
+//    if ([largeCata isEqualToString:@"40"]) {//政策解读
+//        entityType = EChannelCenterEntityType_PolicyNewest;
+//    }
+//    else if ([largeCata isEqualToString:@"10"])//通知公告
+//    {
+//        entityType = EChannelCenterEntityType_Announcement ;
+//    }
+//    else if ([largeCata isEqualToString:@"20"])//办税提醒
+//    {
+//        entityType = EChannelCenterEntityType_TaxNotice;
+//    }
+//    else
+//    {
+//        return;
+//    }
+//    ChannelCenterEntity *entity = [[ChannelCenterEntity alloc] initWithFMDB:[ServyouDefines sharedDatabase]
+//                                                                  tableType:entityType];
+//    
+//    entity.activityId = centerDo.activityId;
+//    NSString *condition = [NSString stringWithFormat:@" AND %@ = ?", [ChannelCenterEntity activityId_Col]];
+//    BOOL isOK = [entity findOneWithCondition:condition parameters:@[entity.activityId] orderBy:@""];
+//    
+//    [entity parseFromCenterDo:centerDo];
+//    entity.largeCata = largeCata;
+//
+//    if (isOK)
+//    {
+//        [entity update];
+//    }
+//    else
+//    {
+//        [entity insert];
+//    }
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - ASIHTTPRequestDelegate
@@ -198,32 +199,32 @@ NSString *const KOffset = @"KOffset";
 {
     UserInfo *userInfo = [ServyouDefines sharedUserInfo];
     NSLog(@"%@", theRequest.responseString);
-    NSDictionary *result = [theRequest.responseString JSONValue];
-    NSString *status = [[result objectForKey:@"head"] objectForKey:@"code"];
-    if ([status isEqualToString:@"00000000"])
-    {        //解析包内容
-        NSArray *package = [[result objectForKey:@"body"] objectForKey:@"package"];
-        NSString *offset = [[NSString alloc] initWithFormat:@"%@",[[result objectForKey:@"body"] objectForKey:@"offset"]];
-        for (NSDictionary *tempDict in package)
-        {
-            ChannelCenterDo *centerDo = [[ChannelCenterDo alloc] initWithDict:tempDict];
-            centerDo.nsrsbh = userInfo.nsrsbhStr;
-            if ([centerDo.opCode isEqualToString:@"wsdc"])
-            {
-                [self wsdcDataParseWithChenterDo:centerDo];
-            }
-            else if ([centerDo.opCode isEqualToString:@"tzgg"])
-            {
-                [self tzggDataParseWithChenterDo:centerDo];
-            }
-        }
-        if ([package count] > 0) {
-            [[NSUserDefaults standardUserDefaults] setObject:offset forKey:KOffset];
-        }
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:kChannelNotificationCenter
-                                                            object:nil];
-    }
+//    NSDictionary *result = [theRequest.responseString JSONValue];
+//    NSString *status = [[result objectForKey:@"head"] objectForKey:@"code"];
+//    if ([status isEqualToString:@"00000000"])
+//    {        //解析包内容
+//        NSArray *package = [[result objectForKey:@"body"] objectForKey:@"package"];
+//        NSString *offset = [[NSString alloc] initWithFormat:@"%@",[[result objectForKey:@"body"] objectForKey:@"offset"]];
+//        for (NSDictionary *tempDict in package)
+//        {
+//            ChannelCenterDo *centerDo = [[ChannelCenterDo alloc] initWithDict:tempDict];
+//            centerDo.nsrsbh = userInfo.nsrsbhStr;
+//            if ([centerDo.opCode isEqualToString:@"wsdc"])
+//            {
+//                [self wsdcDataParseWithChenterDo:centerDo];
+//            }
+//            else if ([centerDo.opCode isEqualToString:@"tzgg"])
+//            {
+//                [self tzggDataParseWithChenterDo:centerDo];
+//            }
+//        }
+//        if ([package count] > 0) {
+//            [[NSUserDefaults standardUserDefaults] setObject:offset forKey:KOffset];
+//        }
+//        
+//        [[NSNotificationCenter defaultCenter] postNotificationName:kChannelNotificationCenter
+//                                                            object:nil];
+//    }
 }
 
 
@@ -244,13 +245,15 @@ NSString *const KOffset = @"KOffset";
 
 - (NSArray *)getFirstOneWithType:(ChannelCenterEntityType)channelCenterType
 {
-    ChannelCenterEntity *entity = [[ChannelCenterEntity alloc] initWithFMDB:[ServyouDefines sharedDatabase]
-                                                                  tableType:channelCenterType];
-    NSString *condition = [NSString stringWithFormat:@" AND %@ = ?", [ChannelCenterEntity nsrsbh_Col]];
-    UserInfo *userInfo = [ServyouDefines sharedUserInfo];
-    NSArray *nsrshbItems = @[userInfo.nsrsbhStr];
-    NSArray *items = [entity findWithCondition:condition parameters:nsrshbItems orderBy:nil startIndex:0 endIndex:NSIntegerMax];
-    return items;
+    return [NSArray array];
+    //河北暂时移除
+//    ChannelCenterEntity *entity = [[ChannelCenterEntity alloc] initWithFMDB:[ServyouDefines sharedDatabase]
+//                                                                  tableType:channelCenterType];
+//    NSString *condition = [NSString stringWithFormat:@" AND %@ = ?", [ChannelCenterEntity nsrsbh_Col]];
+//    UserInfo *userInfo = [ServyouDefines sharedUserInfo];
+//    NSArray *nsrshbItems = @[userInfo.nsrsbhStr];
+//    NSArray *items = [entity findWithCondition:condition parameters:nsrshbItems orderBy:nil startIndex:0 endIndex:NSIntegerMax];
+//    return items;
 }
 
 - (NSInteger)getUnreadNumberWithChannelCenterType:(ChannelCenterEntityType)channelCenterType

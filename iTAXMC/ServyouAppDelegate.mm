@@ -9,12 +9,12 @@
 #import "ServyouAppDelegate.h"
 #import "MessageCenter/MessageCenter.h"
 
-#import "XGPush.h"
+//#import "XGPush.h"
 
-#import "UMSocial.h"
-#import "UMSocialWechatHandler.h"
-#import "UMSocialQQHandler.h"
-#import "UMSocialTencentWeiboHandler.h"
+//#import "UMSocial.h"
+//#import "UMSocialWechatHandler.h"
+//#import "UMSocialQQHandler.h"
+//#import "UMSocialTencentWeiboHandler.h"
 #import "SevryouChannelCenter.h"
 #include "CompatibleaPrintf.h"
 #import "UIImage+Color.h"
@@ -60,15 +60,15 @@ NSString *const KNowDateStringNotification = @"KNowDateStringNotification";
     //显示启动图片3秒，留0.5s给LaunchImage
     [NSThread sleepForTimeInterval:1.5];
     
-    [UMSocialData setAppKey:@"53bba91b56240b3d4603208a"];//友盟AppKey值
-    
-    [UMSocialQQHandler setSupportWebView:YES];//
-    
-    [UMSocialQQHandler setQQWithAppId:@"1101738021" appKey:@"zE6IdUvLgOJ0DXMg" url:@"http://www.baidu.com"];//QQ
-    
-    [UMSocialWechatHandler setWXAppId:@"wxc2491f3676b00c87" appSecret:@"63ded6e1c0d6fc299714b84ff14755f7" url:@"http://www.baidu.com"];
-    
-    [UMSocialTencentWeiboHandler openSSOWithRedirectUrl:@"http://sns.whalecloud.com/tencent2/callback"];
+//    [UMSocialData setAppKey:@"53bba91b56240b3d4603208a"];//友盟AppKey值
+//    
+//    [UMSocialQQHandler setSupportWebView:YES];//
+//    
+//    [UMSocialQQHandler setQQWithAppId:@"1101738021" appKey:@"zE6IdUvLgOJ0DXMg" url:@"http://www.baidu.com"];//QQ
+//    
+//    [UMSocialWechatHandler setWXAppId:@"wxc2491f3676b00c87" appSecret:@"63ded6e1c0d6fc299714b84ff14755f7" url:@"http://www.baidu.com"];
+//    
+//    [UMSocialTencentWeiboHandler openSSOWithRedirectUrl:@"http://sns.whalecloud.com/tencent2/callback"];
 
 //    [[NSNotificationCenter defaultCenter] postNotificationName:@"kLoginSuccess" object:@{@"kLoginTag":[body valueForKey:@"tag"]}];
     
@@ -84,30 +84,30 @@ NSString *const KNowDateStringNotification = @"KNowDateStringNotification";
     //运行环境
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
     
-    //信鸽start
-    [XGPush startApp:2200049523 appKey:@"IX9S9B37VX7J"];
-    
-    id data = [notifications.object objectForKey:@"kLoginTag"];
-    
-    if ([data isKindOfClass:[NSArray class]] || [data isKindOfClass:[NSMutableArray class]])
-    {
-        NSArray *items = (NSArray *)data;
-        NSInteger row = 0;
-        for (NSString *tag in items) {
-            if (row == 0) {
-                [XGPush setAccount:tag];
-            }
-            else{
-                [self XgPush:tag];
-            }
-            row++;
-        }
-    }
-    else if ([data isKindOfClass:[NSString class]] ||[data isKindOfClass:[NSMutableString class]])
-    {
-        NSString *tag = (NSString *)data;
-        [self XgPush:tag];
-    }
+//    //信鸽start
+//    [XGPush startApp:2200049523 appKey:@"IX9S9B37VX7J"];
+//    
+//    id data = [notifications.object objectForKey:@"kLoginTag"];
+//    
+//    if ([data isKindOfClass:[NSArray class]] || [data isKindOfClass:[NSMutableArray class]])
+//    {
+//        NSArray *items = (NSArray *)data;
+//        NSInteger row = 0;
+//        for (NSString *tag in items) {
+//            if (row == 0) {
+//                [XGPush setAccount:tag];
+//            }
+//            else{
+//                [self XgPush:tag];
+//            }
+//            row++;
+//        }
+//    }
+//    else if ([data isKindOfClass:[NSString class]] ||[data isKindOfClass:[NSMutableString class]])
+//    {
+//        NSString *tag = (NSString *)data;
+//        [self XgPush:tag];
+//    }
 }
 
 
@@ -152,13 +152,13 @@ NSString *const KNowDateStringNotification = @"KNowDateStringNotification";
 
 #pragma mark - 百度地图
 -(void)baiduMap{
-    _mapManager = [[BMKMapManager alloc]init];
-    // 如果要关注网络及授权验证事件，请设定     generalDelegate参数
-    BOOL ret = [_mapManager start:@"TwoxIAlehkrYia2vEdWLDZrx" generalDelegate:self];
-    if (!ret)
-    {
-        NSLog(@"启动成功!");
-    }
+//    _mapManager = [[BMKMapManager alloc]init];
+//    // 如果要关注网络及授权验证事件，请设定     generalDelegate参数
+//    BOOL ret = [_mapManager start:@"TwoxIAlehkrYia2vEdWLDZrx" generalDelegate:self];
+//    if (!ret)
+//    {
+//        NSLog(@"启动成功!");
+//    }
 }
 
 -(void)onGetNetworkState:(int)iError
@@ -199,7 +199,7 @@ NSString *const KNowDateStringNotification = @"KNowDateStringNotification";
     };
     
     //设置tag
-    [XGPush setTag:tag successCallback:tagsuccessBlock errorCallback:tagerrorBlock];
+//    [XGPush setTag:tag successCallback:tagsuccessBlock errorCallback:tagerrorBlock];
 }
 
 //获取deviceToken
@@ -210,33 +210,33 @@ NSString *const KNowDateStringNotification = @"KNowDateStringNotification";
                      stringWithFormat:@"Device Token=%@",deviceToken];
     NSLog(@"%@",str);
     //获取手机deviceToken
-    NSString* deviceTokenStr = [XGPush getDeviceToken:deviceToken];
-    
-    
-    //打印获取的deviceToken的字符串
-    NSLog(@"deviceTokenStr is %@",deviceTokenStr);
-    
-    void (^successBlock)(void) = ^(void){
-        //设备注册成功之后的处理
-        NSLog(@"设备注册成功,deviceToken =%@",deviceTokenStr);
-
-        
-        void (^tagsuccessBlock)(void) = ^(void){
-            NSLog(@"~~~tag 设置成功");
-        };
-        
-        void (^tagerrorBlock)(void) = ^(void){
-            NSLog(@"~~~tag 设置失败");
-        };
-    };
-    
-    void (^errorBlock)(void) = ^(void){
-        //设备注册失败之后的处理
-        NSLog(@"设备注册失败");
-    };
-    
-    //注册设备
-    [XGPush registerDevice:deviceToken successCallback:successBlock errorCallback:errorBlock];
+//    NSString* deviceTokenStr = [XGPush getDeviceToken:deviceToken];
+//    
+//    
+//    //打印获取的deviceToken的字符串
+//    NSLog(@"deviceTokenStr is %@",deviceTokenStr);
+//    
+//    void (^successBlock)(void) = ^(void){
+//        //设备注册成功之后的处理
+//        NSLog(@"设备注册成功,deviceToken =%@",deviceTokenStr);
+//
+//        
+//        void (^tagsuccessBlock)(void) = ^(void){
+//            NSLog(@"~~~tag 设置成功");
+//        };
+//        
+//        void (^tagerrorBlock)(void) = ^(void){
+//            NSLog(@"~~~tag 设置失败");
+//        };
+//    };
+//    
+//    void (^errorBlock)(void) = ^(void){
+//        //设备注册失败之后的处理
+//        NSLog(@"设备注册失败");
+//    };
+//    
+//    //注册设备
+//    [XGPush registerDevice:deviceToken successCallback:successBlock errorCallback:errorBlock];
 }
 
 //如果deviceToken获取不到会进入此事件
@@ -251,30 +251,30 @@ NSString *const KNowDateStringNotification = @"KNowDateStringNotification";
 #pragma mark - 收到远程推送通知
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    void (^successBlock)(void) = ^(void){
-        
-        //成功之后的处理
-        NSLog(@"推送反馈(app运行时)反馈成功[xgpush]handleReceiveNotification successBlock = %@",userInfo);
-        
-
-
-        [self kChannelCenter];
-        
-        [XGPush clearLocalNotifications];
-    };
-    
-    void (^errorBlock)(void) = ^(void){
-        //失败之后的处理
-        NSLog(@"推送反馈(app运行时)反馈失败[xgpush]handleReceiveNotification errorBlock");
-    };
-    
-    void (^completion)(void) = ^(void){
-        //失败之后的处理
-        NSLog(@"推送反馈(app运行时)反馈失败[xg push completion]userInfo is");
-    };
-    
-    //推送反馈(app在运行时),支持回调版本
-    [XGPush handleReceiveNotification:userInfo successCallback:successBlock errorCallback:errorBlock completion:completion];
+//    void (^successBlock)(void) = ^(void){
+//        
+//        //成功之后的处理
+//        NSLog(@"推送反馈(app运行时)反馈成功[xgpush]handleReceiveNotification successBlock = %@",userInfo);
+//        
+//
+//
+//        [self kChannelCenter];
+//        
+//        [XGPush clearLocalNotifications];
+//    };
+//    
+//    void (^errorBlock)(void) = ^(void){
+//        //失败之后的处理
+//        NSLog(@"推送反馈(app运行时)反馈失败[xgpush]handleReceiveNotification errorBlock");
+//    };
+//    
+//    void (^completion)(void) = ^(void){
+//        //失败之后的处理
+//        NSLog(@"推送反馈(app运行时)反馈失败[xg push completion]userInfo is");
+//    };
+//    
+//    //推送反馈(app在运行时),支持回调版本
+//    [XGPush handleReceiveNotification:userInfo successCallback:successBlock errorCallback:errorBlock completion:completion];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -341,7 +341,8 @@ NSString *const KNowDateStringNotification = @"KNowDateStringNotification";
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {
-    return  [UMSocialSnsService handleOpenURL:url];
+//    return  [UMSocialSnsService handleOpenURL:url];
+    return FALSE;
 }
 
 - (BOOL)application:(UIApplication *)application
@@ -349,7 +350,8 @@ NSString *const KNowDateStringNotification = @"KNowDateStringNotification";
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation
 {
-    return  [UMSocialSnsService handleOpenURL:url];
+//    return  [UMSocialSnsService handleOpenURL:url];
+    return FALSE;
 }
 
 - (void)kChannelCenter

@@ -74,16 +74,12 @@ enum VerifyStep{
     infoPhones = [[NSMutableArray alloc] initWithCapacity:5];
     btnPhones = [[NSMutableArray alloc] initWithCapacity:5];
     
-    //测试代码
-    self.txtID.text = @"131025755471767";
-    self.txtPassword.text = @"183163";
-}
-
-
--(void) viewWillDisappear:(BOOL)animated
-{
- 	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
- 	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    self.viewBottom.hidden = TRUE;
+    [self.txtID becomeFirstResponder];
+    
+//    //测试代码
+//    self.txtID.text = @"131025755471767";
+//    self.txtPassword.text = @"183163";
 }
 
 - (void)didReceiveMemoryWarning
@@ -94,22 +90,34 @@ enum VerifyStep{
 
 -(void) onBack
 {
+    [self.view endEditing:TRUE];
     [self dismissViewControllerAnimated:TRUE completion:nil];
 }
 
-- (void)authParseWithDict:(NSDictionary *)aDict
-{
-    UserInfo *userInfo = [ServyouDefines sharedUserInfo];
-    userInfo.userID = self.txtID.text;
-    userInfo.password = self.txtPassword.text;
-    userInfo.groupName = [aDict valueForKey:@"groupName"];
-    userInfo.groupID = [aDict valueForKey:@"groupId"];
-    userInfo.key = [aDict valueForKey:@"key"];
-    [userInfo save];
-}
+//- (void)authParseWithDict:(NSDictionary *)aDict
+//{
+//    UserInfo *userInfo = [ServyouDefines sharedUserInfo];
+//    userInfo.userID = self.txtID.text;
+//    userInfo.password = self.txtPassword.text;
+//    userInfo.userName = [aDict valueForKey:@"groupName"];
+//    userInfo.groupID = [aDict valueForKey:@"groupId"];
+//    userInfo.key = [aDict valueForKey:@"key"];
+//    [userInfo save];
+//}
 
-
+//获取用户手机号
 - (IBAction)onUser:(id)sender {
+    [self.txtID resignFirstResponder];
+    self.txtID.text = [self.txtID.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+
+    if (self.txtID.text.length == 0)
+    {
+        [ZAActivityBar showWithStatus:@"请输入纳税人识别号" image:nil duration:1.5 forAction:@""];
+        [self.txtID performSelector:@selector(becomeFirstResponder) withObject:nil afterDelay:1.5];
+        return;
+    }
+
+    
     ASIFormDataRequest * request = [[ASIFormDataRequest alloc] initWithURL:[NSURL URLWithString:HB_HTTP_URL]];
     request.requestMethod = @"POST";
     [request addRequestHeader:@"TradeId" value:@"APP.LOGIN.LXRXX"];
@@ -128,6 +136,7 @@ enum VerifyStep{
     [request startAsynchronous];
 }
 
+//获取验证码
 - (IBAction)onGetPwd:(id)sender {
     int i=0;
     for (UIButton *btn  in self.btnPhones)
@@ -158,6 +167,7 @@ enum VerifyStep{
     }
 }
 
+//登录
 - (IBAction)onLogin:(id)sender {
     [self.txtPassword resignFirstResponder];
     [self.txtID resignFirstResponder];
@@ -228,23 +238,42 @@ enum VerifyStep{
         {
             [self.infoPhones removeAllObjects];
             NSArray *data =  [context objectForKey:@"data"];
-            for (NSDictionary *item in data)
+            if (data.count == 0)
             {
-                PhoneInfo *pi = [[PhoneInfo alloc] init];
-                pi.ID = [item objectForKey:@"id"];
-                pi.name = [item objectForKey:@"text"];
-                [self.infoPhones addObject:pi];
-             }
-            
-            [self updatePhones];
+                [ZAActivityBar showWithStatus:@"未获取到您的联系人手机,请联系税局维护您的联系方式!" image:nil duration:1.5 forAction:@""];
+                [self.txtID performSelector:@selector(becomeFirstResponder) withObject:nil afterDelay:1.5];
+            }
+            else
+            {
+                for (NSDictionary *item in data)
+                {
+                    PhoneInfo *pi = [[PhoneInfo alloc] init];
+                    pi.ID = [item objectForKey:@"id"];
+                    pi.name = [item objectForKey:@"text"];
+                    [self.infoPhones addObject:pi];
+                 }
+                
+                [self updatePhones];
+                self.viewBottom.hidden = FALSE;
+            }
         }
-        else if (VS_GetPwd)
+        else if (VS_GetPwd == self.step)
         {
-            
+
         }
-        else if (VS_Login)
+        else if (VS_Login == self.step)
         {
+            NSDictionary *data =  [context objectForKey:@"data"];
+            NSString *nsrmc = data[@"nsrmc"];
+            NSString *nsrsbh = data[@"nsrsbh"];
+            NSString *swjgMc = data[@"swjgMc"];
+            UserInfo *ui = [ServyouDefines sharedUserInfo];
+            ui.orgName = swjgMc;
+            ui.userID = nsrsbh;
+            ui.userName = nsrmc;
+            [ui save];
             
+            [self onBack];
         }
 //            //登录成功后 渠道数据下载
 //            [self sendChannelCenterForLoginSuccess];
@@ -275,7 +304,7 @@ enum VerifyStep{
 }
 
 - (IBAction)onSwipeGesture:(id)sender {
-    [self dismissViewControllerAnimated:TRUE completion:nil];
+    [self onBack];
 }
 
 //显示手机号
@@ -309,11 +338,12 @@ enum VerifyStep{
     int i = 0;
     for (UIButton *btn in self.btnPhones)
     {
+        btn.selected = (i==0);
         btn.frame = CGRectMake(20, 10 + i*35, 280, 30);
         PhoneInfo * pi = self.infoPhones[i++];
         [btn setTitle:pi.name forState:UIControlStateNormal];
         [btn setTitle:pi.name forState:UIControlStateSelected];
-        btn.selected = (i==0);
+
     }
 }
 
@@ -328,25 +358,25 @@ enum VerifyStep{
     }
 }
 
-//保存key
-- (void)saveUserInfo:(NSDictionary *)body
-{
-    NSArray *xxdyList = [body objectForKey:@"xxdyList"];
-    NSString *nsrsbh = StringEmpty;
-    for (NSDictionary *xxdyDict in xxdyList)
-    {
-        nsrsbh = [xxdyDict objectForKey:@"nsrsbh"];
-    }
-    
-    UserInfo *userInfo = [ServyouDefines sharedUserInfo];
-    userInfo.userID = self.txtID.text;
-    userInfo.password = self.txtPassword.text;
-    userInfo.key = [body objectForKey:@"key"];
-    userInfo.token = [body objectForKey:@"token"];
-    userInfo.nsrsbhStr = nsrsbh;
-    userInfo.loginStatus = @"YES";
-    [userInfo save];
-}
+////保存key
+//- (void)saveUserInfo:(NSDictionary *)body
+//{
+//    NSArray *xxdyList = [body objectForKey:@"xxdyList"];
+//    NSString *nsrsbh = StringEmpty;
+//    for (NSDictionary *xxdyDict in xxdyList)
+//    {
+//        nsrsbh = [xxdyDict objectForKey:@"nsrsbh"];
+//    }
+//    
+//    UserInfo *userInfo = [ServyouDefines sharedUserInfo];
+//    userInfo.userID = self.txtID.text;
+//    userInfo.password = self.txtPassword.text;
+//    userInfo.key = [body objectForKey:@"key"];
+//    userInfo.token = [body objectForKey:@"token"];
+//    userInfo.nsrsbhStr = nsrsbh;
+//    userInfo.loginStatus = @"YES";
+//    [userInfo save];
+//}
 
 #pragma mark - UITextFieldDelegate
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
@@ -358,24 +388,22 @@ enum VerifyStep{
     return ([newtxt length] <= MAX_LEN);
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark - Keyboard
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-- (void) handleKeyboardWillShow:(NSNotification *)paramNotification
+- (void)textFieldDidBeginEditing:(UITextField *)textField
 {
-	NSDictionary *userInfo = paramNotification.userInfo;
-	
-	NSValue *valueEnd = userInfo[UIKeyboardFrameEndUserInfoKey];
-	CGRect rtEnd = CGRectMake(0,0,0,0);
-	[valueEnd getValue:&rtEnd];
-    
-    self.rectContainerView = self.containerView.frame;
-    self.containerView.frame = CGRectMake(self.rectContainerView.origin.x, self.rectContainerView.origin.y - rtEnd.size.height/2, self.rectContainerView.size.width, self.rectContainerView.size.height);
+    if (textField == self.txtPassword)
+    {
+        CGRect rt = self.view.bounds;
+        self.view.bounds = CGRectMake(0, 200, rt.size.width, rt.size.height);
+    }
 }
 
-- (void) handleKeyboardWillHide:(NSNotification *)paramNotification
+- (void)textFieldDidEndEditing:(UITextField *)textField
 {
-    self.containerView.frame = self.rectContainerView;
+    if (textField == self.txtPassword)
+    {
+        CGRect rt = self.view.bounds;
+        self.view.bounds = CGRectMake(0, 0, rt.size.width, rt.size.height);
+    }
 }
 
 #pragma mark - MD5
