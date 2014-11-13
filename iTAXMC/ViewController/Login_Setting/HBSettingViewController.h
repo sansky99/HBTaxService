@@ -10,7 +10,7 @@
 
 //1.6 设置
 @interface HBSettingViewController : UIViewController
-@property (weak, nonatomic) IBOutlet UILabel *userID;
+@property (weak, nonatomic) IBOutlet UILabel *labOrgName;
 @property (weak, nonatomic) IBOutlet UIButton *btnIcon;
 @property (weak, nonatomic) IBOutlet UILabel *labName;
 @property (weak, nonatomic) IBOutlet UILabel *labID;

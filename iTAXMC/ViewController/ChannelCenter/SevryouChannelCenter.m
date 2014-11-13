@@ -244,13 +244,15 @@ NSString *const KOffset = @"KOffset";
 
 - (NSArray *)getFirstOneWithType:(ChannelCenterEntityType)channelCenterType
 {
-    ChannelCenterEntity *entity = [[ChannelCenterEntity alloc] initWithFMDB:[ServyouDefines sharedDatabase]
-                                                                  tableType:channelCenterType];
-    NSString *condition = [NSString stringWithFormat:@" AND %@ = ?", [ChannelCenterEntity nsrsbh_Col]];
-    UserInfo *userInfo = [ServyouDefines sharedUserInfo];
-    NSArray *nsrshbItems = @[userInfo.nsrsbhStr];
-    NSArray *items = [entity findWithCondition:condition parameters:nsrshbItems orderBy:nil startIndex:0 endIndex:NSIntegerMax];
-    return items;
+    return [NSArray array];
+    //河北暂时移除
+//    ChannelCenterEntity *entity = [[ChannelCenterEntity alloc] initWithFMDB:[ServyouDefines sharedDatabase]
+//                                                                  tableType:channelCenterType];
+//    NSString *condition = [NSString stringWithFormat:@" AND %@ = ?", [ChannelCenterEntity nsrsbh_Col]];
+//    UserInfo *userInfo = [ServyouDefines sharedUserInfo];
+//    NSArray *nsrshbItems = @[userInfo.nsrsbhStr];
+//    NSArray *items = [entity findWithCondition:condition parameters:nsrshbItems orderBy:nil startIndex:0 endIndex:NSIntegerMax];
+//    return items;
 }
 
 - (NSInteger)getUnreadNumberWithChannelCenterType:(ChannelCenterEntityType)channelCenterType

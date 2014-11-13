@@ -20,9 +20,9 @@ enum {
 @property (nonatomic, strong) NSString *password;         //
 @property (nonatomic, strong) NSString *userID;             //用户名
 @property (nonatomic, strong) NSString *groupID;
-@property (nonatomic, strong) NSString *groupName;       //纳税人名称
+@property (nonatomic, strong) NSString *userName;       //纳税人名称
 //@property (nonatomic, strong) NSString *orgCode;         //登陆者税务机关代码
-//@property (nonatomic, strong) NSString *orgName;         //税务机关名称
+@property (nonatomic, strong) NSString *orgName;         //税务机关名称
 //@property (nonatomic, strong) NSString *regDate;           //注册日期
 @property (nonatomic, readonly) BOOL isLogin;
 @property (nonatomic, strong) NSString *tag;
