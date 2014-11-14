@@ -117,6 +117,7 @@
 		04BDC02B1980A37A003EC556 /* FontSizeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BDC0211980A37A003EC556 /* FontSizeViewController.m */; };
 		04C9E96219779C9F00FF5EDE /* MRCircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C9E95E19779C9F00FF5EDE /* MRCircularProgressView.m */; };
 		04C9E96319779C9F00FF5EDE /* MRWeakProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C9E96119779C9F00FF5EDE /* MRWeakProxy.m */; };
+		04D214241A1595BF0003B90F /* ASIFormDataRequest+HBData.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D214231A1595BF0003B90F /* ASIFormDataRequest+HBData.m */; };
 		04D23797196FF05E009C7B33 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04D23796196FF05E009C7B33 /* CoreTelephony.framework */; };
 		04D3F5AB19A57AC100755BA0 /* MyActivityIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D3F5AA19A57AC100755BA0 /* MyActivityIndicatorView.m */; };
 		04DA5BA419ACA1AF00143C8A /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DA5B9F19ACA1AF00143C8A /* TFHpple.m */; };
@@ -400,6 +401,8 @@
 		04C9E95F19779C9F00FF5EDE /* MRProgressHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRProgressHelper.h; sourceTree = "<group>"; };
 		04C9E96019779C9F00FF5EDE /* MRWeakProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRWeakProxy.h; sourceTree = "<group>"; };
 		04C9E96119779C9F00FF5EDE /* MRWeakProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRWeakProxy.m; sourceTree = "<group>"; };
+		04D214221A1595BF0003B90F /* ASIFormDataRequest+HBData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ASIFormDataRequest+HBData.h"; sourceTree = "<group>"; };
+		04D214231A1595BF0003B90F /* ASIFormDataRequest+HBData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ASIFormDataRequest+HBData.m"; sourceTree = "<group>"; };
 		04D23796196FF05E009C7B33 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		04D3F5A919A57AC100755BA0 /* MyActivityIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyActivityIndicatorView.h; sourceTree = "<group>"; };
 		04D3F5AA19A57AC100755BA0 /* MyActivityIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyActivityIndicatorView.m; sourceTree = "<group>"; };
@@ -654,6 +657,8 @@
 				04BBC283196E19E500C9050F /* SevryouDefines.m */,
 				046339D71974D32F002EB110 /* UserInfo.h */,
 				046339D81974D32F002EB110 /* UserInfo.m */,
+				04D214221A1595BF0003B90F /* ASIFormDataRequest+HBData.h */,
+				04D214231A1595BF0003B90F /* ASIFormDataRequest+HBData.m */,
 				0488DE211A1333100092E017 /* ViewController */,
 				046AA302196A951D0040CBB8 /* UI */,
 			);
@@ -1718,6 +1723,7 @@
 				1869944319AD7BF20055AB8D /* JSONKeyMapper.m in Sources */,
 				04F4824A1989CFCA00FE3F7C /* SVProgressHUD.m in Sources */,
 				04BBC271196CD56300C9050F /* FMDatabaseQueue.m in Sources */,
+				04D214241A1595BF0003B90F /* ASIFormDataRequest+HBData.m in Sources */,
 				1869944419AD7BF20055AB8D /* JSONValueTransformer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

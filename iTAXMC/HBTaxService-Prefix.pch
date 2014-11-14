@@ -20,9 +20,6 @@
 
 #import "UserInfo.h"
 
-//河北
-static NSString *DES_KEY = @"JDLSJDLS";
-static NSString *HB_HTTP_URL = @"http://192.168.29.102:7001/bondegate/bondeServiceServlet";
 
 //#define _TEST_ENV_          //测试环境
 

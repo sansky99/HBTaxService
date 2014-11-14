@@ -11,6 +11,8 @@
 #import "CompatibleaPrintf.h"
 #import "ASIHTTPRequest.h"
 #import "JSONKit.h"
+#import "ASIFormDataRequest+HBData.h"
+#import "NSDate+convenience.h"
 
 NSString *kCalendarDay = @"kCalendarDay";
 NSString *kCalendarData = @"kCalendarData";
@@ -40,7 +42,7 @@ NSString *kCalendarData = @"kCalendarData";
 
 @interface CalendarViewController () <CalendarViewDelegate>
 @property (nonatomic, strong) CalendarView *calendarView;
-@property (nonatomic, strong) ASIHTTPRequest *httpRequest;
+@property (nonatomic, strong) ASIFormDataRequest *httpRequest;
 @property (nonatomic, strong) NSArray *calendarItems;
 @property (nonatomic, strong) NSArray *monthItems;
 @property (nonatomic, strong) NSMutableArray *contentViews;
@@ -48,6 +50,17 @@ NSString *kCalendarData = @"kCalendarData";
 
 @implementation CalendarViewController
 @synthesize moduleID, calendarView, contentViews;
+
++(UIImage*) msgBG
+{
+    static UIImage *bg=nil;
+    if (bg == nil)
+    {
+        UIEdgeInsets insets = UIEdgeInsetsMake(15, 10, 5, 5);
+        bg = [[UIImage imageNamed:@"calendarMsgBG"] resizableImageWithCapInsets:insets];
+    }
+    return bg;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -69,8 +82,8 @@ SYNeedNavBarDoback
     NeedOffsetWhenIOS7NavBar
     
     self.title = @"办税日历";
-    self.view.backgroundColor = [ServyouDefinesUI ColorGray];
-    contentViews = [[NSMutableArray alloc] initWithCapacity:3];
+    self.view.backgroundColor = [UIColor whiteColor];
+    contentViews = [[NSMutableArray alloc] initWithCapacity:20];
     
     calendarView = [[CalendarView alloc] init];
     calendarView.limitOneYear = TRUE;
@@ -107,28 +120,26 @@ SYNeedNavBarDoback
 {
     BOOL bUpdate = TRUE;
     
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *component = [calendar components:(NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay) fromDate:[NSDate date]];
+    NSDate *date = [NSDate date];
+
     NSArray *day =  [[NSUserDefaults standardUserDefaults] arrayForKey:kCalendarDay];
     if (day != nil && day.count >= 3)
     {
-        if ([day[0] integerValue] == component.year
-                && [day[1] integerValue] == component.month
-                && [day[2] integerValue] == component.day)
+        if ([day[0] integerValue] == date.year
+                && [day[1] integerValue] == date.month
+                && [day[2] integerValue] == date.day)
             bUpdate = FALSE;
     }
     
     if (bUpdate)
     {
-        NSArray *module = [ServyouDefines getModule:moduleID];
-        if (module)
-        {
             [self.httpRequest cancel];
-            NSString *url = [NSString stringWithFormat:@"%@%@?year=%d", HB_HTTP_URL, module[Col_URL], component.year];
-            self.httpRequest = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:url]];
+        
+            NSString *body = [NSString stringWithFormat:@"{\"year\":\"%ld\"}", (long)date.year];
+            self.httpRequest = [ASIFormDataRequest requestWithID:@"APP.BSRL.QUERY" andBody:body];
+
             self.httpRequest.delegate = self;
             [self.httpRequest startAsynchronous];
-        }
     }
     else
     {
@@ -154,14 +165,11 @@ SYNeedNavBarDoback
     NSMutableArray *items = [[NSMutableArray alloc] init];
     [self reloadCalendar];
     
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *component = [calendar components:(NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay) fromDate:date];
-
     @synchronized(self.calendarItems)
     {
         for (CalendarItem* item in self.calendarItems)
         {
-            if (component.month == [item.month integerValue])
+            if (date.month == [item.month integerValue])
                 [items addObject:item];
         }
         [items sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
@@ -175,13 +183,13 @@ SYNeedNavBarDoback
         }];
     }
     
-    for (UILabel *label in contentViews) {
+    for (UIControl *label in contentViews) {
         [label removeFromSuperview];
     }
     [contentViews removeAllObjects];
     
     CGRect rt = CGRectMake(0, 0, 320,  /*290*/self.calendarView.calendarHeight);
-    double leftHeight = 32, span = 6;
+    double leftHeight = 32, span = 16;
     for (CalendarItem* item in items)
     {
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15, rt.origin.y + rt.size.height + span, leftHeight, leftHeight)];
@@ -202,9 +210,14 @@ SYNeedNavBarDoback
         label.minimumScaleFactor = [UIFont smallSystemFontSize] / [label.font pointSize];
         label.backgroundColor = [UIColor clearColor];
         [self.view addSubview:label];
-        
         rt = label.frame;
         [self.contentViews addObject:label];
+        
+        UIImageView *imageLayer = [[UIImageView alloc] initWithFrame: CGRectMake(rt.origin.x - span, rt.origin.y, rt.size.width, rt.size.height) ];
+        imageLayer.image = [CalendarViewController msgBG];
+//         imageLayer.contents = (id)[CalendarViewController msgBG].CGImage;
+       [self.view insertSubview:imageLayer belowSubview:label];
+        [self.contentViews addObject:imageLayer];
     }
     
     self.monthItems = items;
@@ -218,12 +231,11 @@ SYNeedNavBarDoback
         NSData *data = [NSKeyedArchiver archivedDataWithRootObject:items];
         [[NSUserDefaults standardUserDefaults] setObject:data forKey:kCalendarData];
         
-        NSCalendar *calendar = [NSCalendar currentCalendar];
-        NSDateComponents *component = [calendar components:(NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay) fromDate:[NSDate date]];
+        NSDate *date = [NSDate date];
         [[NSUserDefaults standardUserDefaults] setObject:@[
-                                                           [NSNumber numberWithInteger:component.year]
-                                                           , [NSNumber numberWithInteger:component.month]
-                                                           , [NSNumber numberWithInteger:component.day]] forKey:kCalendarDay];
+                                                           [NSNumber numberWithInteger:date.year]
+                                                           , [NSNumber numberWithInteger:date.month]
+                                                           , [NSNumber numberWithInteger:date.day]] forKey:kCalendarDay];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
 }
@@ -238,28 +250,31 @@ SYNeedNavBarDoback
 
 - (void)requestFinished:(ASIHTTPRequest *)theRequest
 {
-//    NSLog(@"%@", theRequest.responseString);
+    theRequest.responseEncoding = NSUTF8StringEncoding;
+    NSLog(@"%@", theRequest.responseString);
     NSDictionary *result = [theRequest.responseString objectFromJSONString];
-    
-    if ([ServyouDefines isServerResultSuccessed:result])
+    NSDictionary *context = [[result objectForKey:@"context"] objectFromJSONString];
+    NSNumber *success = [context objectForKey:@"success"];
+    if ([success boolValue])
     {
         NSMutableArray *calendarItems = [[NSMutableArray alloc] init];
-        NSArray *body = [result objectForKey:@"body"];
-        if ([body isKindOfClass:[NSArray class]])
+        NSArray *data = [context objectForKey:@"data"];
+
+        for (NSDictionary *item in data)
         {
-            for (NSArray *items in body)
-            {
-                for (NSDictionary *item in items)
-                {
-                    CalendarItem *ci = [[CalendarItem alloc] init];
-                    ci.month = [NSNumber numberWithInteger: [[item objectForKey:@"month"] integerValue]];
-                    ci.day = [NSNumber numberWithInteger: [[item objectForKey:@"day"] integerValue]];
-                    ci.content = [item objectForKey:@"content"];
-                    [calendarItems addObject:ci];
-                }
-            }
+            NSString *strDate = [item objectForKey:@"sbjkqx"];
+            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+            formatter.dateFormat = @"M月dd日";
+            NSDate *date = [formatter dateFromString:strDate];
+            
+            CalendarItem *ci = [[CalendarItem alloc] init];
+            
+            ci.month = [NSNumber numberWithInteger:date.month];
+            ci.day = [NSNumber numberWithInteger:date.day];
+            ci.content = [item objectForKey:@"xm"];
+            [calendarItems addObject:ci];
         }
-        
+
         [self saveCalendar:calendarItems];
         [self reloadCalendar:self.calendarView.currentMonth];
     }

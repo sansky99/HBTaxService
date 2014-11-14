@@ -8,7 +8,7 @@
 
 #import "UploadSourceViewController.h"
 #include "CompatibleaPrintf.h"
-#import "ASIFormDataRequest.h"
+#import "ASIFormDataRequest+HBData.h"
 #import <MobileCoreServices/UTCoreTypes.h>
 #import "ZAActivityBar.h"
 #import "JSONKit.h"
@@ -175,25 +175,16 @@ static uint     MAX_CACHE = 50;
 //上传图片
 -(void)  doUploadImage:(UIImage*) image
 {
-    ASIFormDataRequest * request = [[ASIFormDataRequest alloc] initWithURL:[NSURL URLWithString:HB_HTTP_URL]];
-    request.requestMethod = @"POST";
-    [request addRequestHeader:@"TradeId" value:@"APP.FBZL.SCZLK"];
-    [request addRequestHeader:@"MessageType" value:@"JSON-HTTP"];
-    [request addRequestHeader:@"ChannelId" value:@"HB_APP"];
-    [request addRequestHeader:@"Controls" value:@"crypt,DES;code,BASE64;"];
-    
     NSData * imageData = UIImagePNGRepresentation(image);
     NSString *base64 = [ASIHTTPRequest base64forData:imageData];
    
     NSString *body = [NSString stringWithFormat:@"{\"nsrsbh\":\"%@\",\"swsx_dl_dm\":\"%@\",\"fbzlmc\":\"%@\",\"fbzldata\":\"%@\"}", self.nsrsbh, self.typeID, self.typeName, base64];
-    NSData *bodyData = [body dataUsingEncoding:NSUTF8StringEncoding];
-    NSData *bodyEncode = [UserInfo DESEncrypt:bodyData WithKey:DES_KEY];
-    [request appendPostString: [ASIHTTPRequest base64forData:bodyEncode]];
-//    NSLog(@"%@", [ASIHTTPRequest base64forData:bodyEncode]);
+    ASIFormDataRequest * request = [ASIFormDataRequest requestWithID:@"APP.FBZL.SCZLK" andBody:body];
     
     request.delegate = self;
     [request startAsynchronous];
 }
+
 //保存图片至本地
 -(void) saveToCache:(UIImage*) image
 {

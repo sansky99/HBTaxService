@@ -12,7 +12,7 @@
 #import "CompatibleaPrintf.h"
 #import "ServyouDefines.h"
 #import "ZAActivityBar.h"
-#import "ASIFormDataRequest.h"
+#import "ASIFormDataRequest+HBData.h"
 #import "JSONKit.h"
 #import "MyActivityIndicatorView.h"
 #import "SevryouChannelCenter.h"
@@ -117,20 +117,9 @@ enum VerifyStep{
         return;
     }
 
-    
-    ASIFormDataRequest * request = [[ASIFormDataRequest alloc] initWithURL:[NSURL URLWithString:HB_HTTP_URL]];
-    request.requestMethod = @"POST";
-    [request addRequestHeader:@"TradeId" value:@"APP.LOGIN.LXRXX"];
-    [request addRequestHeader:@"MessageType" value:@"JSON-HTTP"];
-    [request addRequestHeader:@"ChannelId" value:@"HB_APP"];
-    [request addRequestHeader:@"Controls" value:@"crypt,DES;code,BASE64;"];
-    
     NSString *body = [NSString stringWithFormat:@"{\"nsrsbh\":\"%@\"}", self.txtID.text];
-    NSData *bodyData = [body dataUsingEncoding:NSUTF8StringEncoding];
-    NSData *bodyEncode = [UserInfo DESEncrypt:bodyData WithKey:DES_KEY];
-    [request appendPostString: [ASIHTTPRequest base64forData:bodyEncode]];
-    //    NSLog(@"%@", [ASIHTTPRequest base64forData:bodyEncode]);
-    
+    ASIFormDataRequest * request = [ASIFormDataRequest requestWithID:@"APP.LOGIN.LXRXX" andBody:body];
+
     request.delegate = self;
     self.step = VS_GetPhones;
     [request startAsynchronous];
@@ -144,20 +133,10 @@ enum VerifyStep{
         if (btn.selected)
         {
             PhoneInfo *pi = self.infoPhones[i];
-            
-            ASIFormDataRequest * request = [[ASIFormDataRequest alloc] initWithURL:[NSURL URLWithString:HB_HTTP_URL]];
-            request.requestMethod = @"POST";
-            [request addRequestHeader:@"TradeId" value:@"APP.LOGIN.YZMFS"];
-            [request addRequestHeader:@"MessageType" value:@"JSON-HTTP"];
-            [request addRequestHeader:@"ChannelId" value:@"HB_APP"];
-            [request addRequestHeader:@"Controls" value:@"crypt,DES;code,BASE64;"];
-            
             NSString *body = [NSString stringWithFormat:@"{\"nsrsbh\":\"%@\", \"dlrsf\":\"%@\"}", self.txtID.text, pi.ID];
-            NSData *bodyData = [body dataUsingEncoding:NSUTF8StringEncoding];
-            NSData *bodyEncode = [UserInfo DESEncrypt:bodyData WithKey:DES_KEY];
-            [request appendPostString: [ASIHTTPRequest base64forData:bodyEncode]];
-//          NSLog(@"%@", [ASIHTTPRequest base64forData:bodyEncode]);
-            
+    
+            ASIFormDataRequest * request = [ASIFormDataRequest requestWithID:@"APP.LOGIN.YZMFS" andBody:body];
+
             request.delegate = self;
             self.step = VS_GetPwd;
             [request startAsynchronous];
@@ -197,19 +176,10 @@ enum VerifyStep{
         i++;
     }
 
-    ASIFormDataRequest * request = [[ASIFormDataRequest alloc] initWithURL:[NSURL URLWithString:HB_HTTP_URL]];
-    request.requestMethod = @"POST";
-    [request addRequestHeader:@"TradeId" value:@"APP.LOGIN.SFYZ"];
-    [request addRequestHeader:@"MessageType" value:@"JSON-HTTP"];
-    [request addRequestHeader:@"ChannelId" value:@"HB_APP"];
-    [request addRequestHeader:@"Controls" value:@"crypt,DES;code,BASE64;"];
-    
     NSString *body = [NSString stringWithFormat:@"{\"nsrsbh\":\"%@\", \"dlrsf\":\"%@\", \"sjyzm\":\"%@\"}", self.txtID.text, pi.ID, self.txtPassword.text];
-    NSData *bodyData = [body dataUsingEncoding:NSUTF8StringEncoding];
-    NSData *bodyEncode = [UserInfo DESEncrypt:bodyData WithKey:DES_KEY];
-    [request appendPostString: [ASIHTTPRequest base64forData:bodyEncode]];
-//  NSLog(@"%@", [ASIHTTPRequest base64forData:bodyEncode]);
     
+    ASIFormDataRequest * request = [ASIFormDataRequest requestWithID:@"APP.LOGIN.SFYZ" andBody:body];
+
     request.delegate = self;
     self.step = VS_Login;
     [request startAsynchronous];
