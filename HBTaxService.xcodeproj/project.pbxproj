@@ -635,7 +635,7 @@
 			name = JSBadgeView;
 			sourceTree = "<group>";
 		};
-		041656BE1A085F12003F70C8 /* Upload */ = {
+		041656BE1A085F12003F70C8 /* 上传 */ = {
 			isa = PBXGroup;
 			children = (
 				041656C01A085F7D003F70C8 /* UploadTypeTableViewController.h */,
@@ -645,7 +645,7 @@
 				0488DE141A0C6E660092E017 /* UploadTypeInfoViewController.h */,
 				0488DE151A0C6E660092E017 /* UploadTypeInfoViewController.m */,
 			);
-			name = Upload;
+			name = "上传";
 			sourceTree = "<group>";
 		};
 		041656BF1A085F22003F70C8 /* 黄凯 */ = {
@@ -905,7 +905,7 @@
 			name = ViewController;
 			sourceTree = "<group>";
 		};
-		0488DE171A1048490092E017 /* Login_Setting */ = {
+		0488DE171A1048490092E017 /* 设置_登录 */ = {
 			isa = PBXGroup;
 			children = (
 				0488DE1E1A1065810092E017 /* HBLoginViewController.h */,
@@ -913,27 +913,27 @@
 				0488DE181A10485B0092E017 /* HBSettingViewController.h */,
 				0488DE191A10485B0092E017 /* HBSettingViewController.m */,
 			);
-			name = Login_Setting;
+			name = "设置_登录";
 			sourceTree = "<group>";
 		};
 		0488DE211A1333100092E017 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				04F6562A1A147A9A0020380B /* Overdue */,
-				0488DE2F1A1356E00092E017 /* Calendar */,
+				04F6562A1A147A9A0020380B /* 滞纳金 */,
+				0488DE2F1A1356E00092E017 /* 日历 */,
 				046AA304196A96E00040CBB8 /* MainTabBarController.h */,
 				046AA305196A96E00040CBB8 /* MainTabBarController.m */,
 				041656BB1A085A0A003F70C8 /* HBMainViewController.h */,
 				041656BC1A085A0A003F70C8 /* HBMainViewController.m */,
 				0488DE231A1334380092E017 /* ServiceViewController.h */,
 				0488DE241A1334380092E017 /* ServiceViewController.m */,
-				0488DE171A1048490092E017 /* Login_Setting */,
-				041656BE1A085F12003F70C8 /* Upload */,
+				0488DE171A1048490092E017 /* 设置_登录 */,
+				041656BE1A085F12003F70C8 /* 上传 */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
 		};
-		0488DE2F1A1356E00092E017 /* Calendar */ = {
+		0488DE2F1A1356E00092E017 /* 日历 */ = {
 			isa = PBXGroup;
 			children = (
 				0488DE301A1356E00092E017 /* CalendarView.h */,
@@ -949,6 +949,7 @@
 				0488DE3A1A1356E00092E017 /* UIView+convenience.h */,
 				0488DE3B1A1356E00092E017 /* UIView+convenience.m */,
 			);
+			name = "日历";
 			path = Calendar;
 			sourceTree = SOURCE_ROOT;
 		};
@@ -1201,7 +1202,7 @@
 			path = ThirdPart/SVProgressHUD;
 			sourceTree = "<group>";
 		};
-		04F6562A1A147A9A0020380B /* Overdue */ = {
+		04F6562A1A147A9A0020380B /* 滞纳金 */ = {
 			isa = PBXGroup;
 			children = (
 				0488DE2C1A133BF60092E017 /* DatePickerView.h */,
@@ -1209,7 +1210,7 @@
 				0488DE291A133B170092E017 /* OverduePaymentViewController.h */,
 				0488DE2A1A133B170092E017 /* OverduePaymentViewController.m */,
 			);
-			name = Overdue;
+			name = "滞纳金";
 			sourceTree = "<group>";
 		};
 		184D89E119C97DF300370862 /* keyboard */ = {
